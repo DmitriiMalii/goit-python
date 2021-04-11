@@ -4,7 +4,7 @@ import sys
 
 fotos_sample = [".JPEG", ".PNG", ".JPG", ".SVG"]
 video_sample = [".AVI", ".MP4", ".MOV", ".MKV"]
-documents_samle = [".DOC", ".DOCX", ".TXT", ".PDF", ".XLSX", ".PPTX"]
+documents_sample = [".DOC", ".DOCX", ".TXT", ".PDF", ".XLSX", ".PPTX"]
 music_sample = [".MP3", ".OGG", ".WAV", ".AMR"]
 archive_sample = [".ZIP", ".GZ", ".TAR"]
 
@@ -27,7 +27,7 @@ def scan_folder(path_folder_to_scan):
                     fotos.append(obj.name)
                 elif obj.suffix.upper() in video_sample:
                     video.append(obj.name)
-                elif obj.suffix.upper() in documents_samle:
+                elif obj.suffix.upper() in documents_sample:
                     documents.append(obj.name)
                 elif obj.suffix.upper() in music_sample:
                     music.append(obj.name)
