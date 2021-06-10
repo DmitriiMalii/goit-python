@@ -100,24 +100,3 @@ class Phone(RecordField):
 class Birthday(RecordField):
     pass
 
-
-# book = AddressBook()
-#
-# name1 = Name('Alex')
-# phone1 = Phone('0951225888')
-# birthday1 = Birthday('18/04/2006')
-# record1 = Record()
-# record1.create_record(name1, phone1, birthday1)
-# book.add_record(record1)
-#
-# name2 = Name('Dima')
-# phone2 = Phone('0503270404')
-# record2 = Record()
-# record2.create_record(name2, phone2)
-# book.add_record(record2)
-#
-# for i in book:
-#     print(i)
-
-
-
