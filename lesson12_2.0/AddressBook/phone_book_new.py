@@ -28,6 +28,14 @@ class AddressBook(object):
     def add_record(self, record):
         self.phonebook.append(record)
 
+    def search(self, string):
+        for item in self.phonebook:
+            for key in item:
+                if key == string:
+                    return True
+                else:
+                    return False
+
     def remove_record(self, index):
         del self.phonebook[index]
 
@@ -91,4 +99,25 @@ class Phone(RecordField):
 
 class Birthday(RecordField):
     pass
+
+
+# book = AddressBook()
+#
+# name1 = Name('Alex')
+# phone1 = Phone('0951225888')
+# birthday1 = Birthday('18/04/2006')
+# record1 = Record()
+# record1.create_record(name1, phone1, birthday1)
+# book.add_record(record1)
+#
+# name2 = Name('Dima')
+# phone2 = Phone('0503270404')
+# record2 = Record()
+# record2.create_record(name2, phone2)
+# book.add_record(record2)
+#
+# for i in book:
+#     print(i)
+
+
 

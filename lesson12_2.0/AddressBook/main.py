@@ -16,13 +16,15 @@ def input_error(func):
 
 @input_error
 def add(cmd):
-    for item in book:
-        if cmd[1] in item:
-            return f'\nThe contact is already in the phone book.'
-        else:
-            record = Record()
+    if book.search(cmd[1]):
+        return f'\nThe contact is already in the phone book.'
+    else:
+        record = Record()
+        if len(cmd) >= 4:
             record.create_record(cmd[1], cmd[2], cmd[3])
-            book.add_record(record)
+        else:
+            record.create_record(cmd[1], cmd[2])
+        book.add_record(record)
     return f'\nContact {cmd[1]} has been added.'
 
 
@@ -72,7 +74,7 @@ def phone(cmd):
         if cmd[1] in item:
             return item
         else:
-            print(f'Record with name: {cmd[1]} not found.')
+            print(f'Record with name {cmd[1]} not found.')
 
 
 def show_all(*args):
@@ -95,11 +97,10 @@ EXIT_COMMANDS = {
                 'good': ''
 }
 
-book = AddressBook()
-
-
 def main():
-    book.load_data()
+    global book
+    book = AddressBook()
+    # book.load_data()
     while True:
         string = input('\nEnter your command (hello, add, delete, change, phone, show_all or exit):\n')
         cmd = parser(string)
