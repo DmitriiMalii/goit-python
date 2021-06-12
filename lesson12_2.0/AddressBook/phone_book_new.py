@@ -2,6 +2,9 @@ import pickle
 
 
 class AddressBook(object):
+    '''
+        Адресная книга представляет собой список, содержащий словари/рекорды с полями/fields
+    '''
     def __init__(self):
         self.counter = -1
         self.phonebook = []
@@ -30,22 +33,13 @@ class AddressBook(object):
 
     def search(self, string):
         for item in self.phonebook:
-            for key in item:
-                if key == string:
-                    return True
-                else:
-                    return False
+            print(item)
+            if string in item['name']:
+                return True
+        return False
 
     def remove_record(self, index):
         del self.phonebook[index]
-
-    def save_data(self):
-        with open(self.phonebook_file, 'wb') as file:
-            pickle.dump(self, file)
-
-    def load_data(self):
-        with open(self.phonebook_file, 'rb') as file:
-            self.phonebook = pickle.load(file)
 
 
 class Record(object):
@@ -60,9 +54,9 @@ class Record(object):
         return len(self.record)
 
     def __next__(self):
-        if self.counter < len(self.record):
+        if self.counter >= len(self.record):
             self.counter += 1
-            return self.record.items()
+            return self.record.values()
         raise StopIteration
 
     def __str__(self):
@@ -99,4 +93,25 @@ class Phone(RecordField):
 
 class Birthday(RecordField):
     pass
+
+
+book = AddressBook()
+
+name1 = Name('Alex')
+phone1 = Phone('56467886878')
+birthday1 = Birthday('18/04/2006')
+record1 = Record()
+record1.create_record(name1, phone1, birthday1)
+book.add_record(record1)
+
+name2 = Name('Dima')
+phone2 = Phone('687879678654')
+record2 = Record()
+record2.create_record(name2, phone2)
+book.add_record(record2)
+
+print(record1.items())
+
+
+
 
