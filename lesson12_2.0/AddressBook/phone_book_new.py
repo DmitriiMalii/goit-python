@@ -81,42 +81,48 @@ class Record:
 
 
 class RecordField(object):
-    def __init__(self, value):
-        self.value = value
+    def __init__(self):
+        self.__value = None
 
     def __str__(self):
-        return f"{self.value}"
+        return f"{self.__value}"
 
 
 class Name(RecordField):
-    pass
+    def __init__(self, name):
+        super().__init__()
+        self.name = name
 
 
 class Phone(RecordField):
-    pass
+    def __init__(self, phone):
+        super().__init__()
+        self.phone = phone
+
+    @property
+    def phone(self):
+        return self.__value
+
+    @phone.setter
+    def phone(self, phone):
+        if phone.isdigit():
+            self.__value = phone
+        else:
+            raise Exception('Please, enter a valid phone number')
 
 
 class Birthday(RecordField):
-    pass
+    def __init__(self, birthday):
+        super().__init__()
+        self.birthday = birthday
 
+    @property
+    def birthday(self):
+        return self.__value
 
-book = AddressBook()
-
-name1 = Name('Alex')
-phone1 = Phone('56467trer886878')
-birthday1 = Birthday('18/04/2006')
-record1 = Record()
-record1.create_record(name1, phone1, birthday1)
-book.add_record(record1)
-
-name2 = Name('Dima')
-phone2 = Phone('687879678654')
-record2 = Record()
-record2.create_record(name2, phone2)
-book.add_record(record2)
-
-
-
-
-
-
+    @birthday.setter
+    def birthday(self, birthday):
+        if birthday.isdigit() and len(birthday) == 8:
+            self.__value = birthday
+        else:
+            raise Exception('Please, enter a valid date birthday')
