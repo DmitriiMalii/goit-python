@@ -1,6 +1,3 @@
-import pickle
-
-
 class AddressBook(object):
     '''
         Адресная книга представляет собой список, содержащий словари/рекорды с полями/fields
