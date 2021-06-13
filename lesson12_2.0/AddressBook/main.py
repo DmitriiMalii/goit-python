@@ -20,20 +20,17 @@ def add(cmd):
     '''
         Добавляю запись (словарь, содержащий имя, телефон и если есть ДР)
         в телефонную книгу.
-        ЕСТЬ НЕРЕШЕННАЯ ПРОБЛЕМА С ПРОВЕРКОЙ НА НАЛИЧИИ УЖЕ ВНЕСЕННОГО ИМЕНИ!!!
-        как получить доступ к аттрибутам объектов(полей) в объекте(рекорд/словарь)?
     '''
-    for item in book:
-        for value in item.values():
-            if value == cmd[1]:
-                return f'\nThe contact is already in the phone book.'
+    for i in range(len(book)):
+        if book[i].__getitem__('name') == cmd[1]:
+            return f'\nThe contact is already in the phone book.'
+        else:
+            record = Record()
+            if len(cmd) >= 4:
+                record.create_record(cmd[1], cmd[2], cmd[3])
             else:
-                record = Record()
-                if len(cmd) >= 4:
-                    record.create_record(cmd[1], cmd[2], cmd[3])
-                else:
-                    record.create_record(cmd[1], cmd[2])
-                book.add_record(record)
+                record.create_record(cmd[1], cmd[2])
+            book.add_record(record)
     return f'\nContact {cmd[1]} has been added.'
 
 
@@ -46,22 +43,38 @@ def bye(*args):
 
 
 @input_error
-def change(cmd):
-    for item in book:
-        if cmd[1] in item:
-            item.update({'phone': cmd[2]})
-    return f'\nContact {cmd[1]} has been updated.'
+def change_phone(cmd):
+    '''
+        Проверяю. есть ли запись с заданным именем, меняю номер телефона на новый.
+    '''
+    for i in range(len(book)):
+        if book[i].__getitem__('name') == cmd[1]:
+            book[i].__setitem__('phone', cmd[2])
+            return f'Phone number has been changed'
+    return f'Record with name: {cmd[1]} not found.'
+
+
+def change_birthday(cmd):
+    '''
+        Проверяю. есть ли запись с заданным именем, меняю ДР контакта на новый.
+    '''
+    for i in range(len(book)):
+        if book[i].__getitem__('name') == cmd[1]:
+            book[i].__setitem__('birthday', cmd[2])
+            return f'Birthday has been changed'
+    return f'Record with name: {cmd[1]} not found.'
 
 
 def delete(cmd):
-    for item in book:
-        if cmd[1] in item:
-            index = item.__index__()
+    '''
+        Удаляю запись с заданным именем.
+    '''
+    for i in range(len(book)):
+        if book[i].__getitem__('name') == cmd[1]:
+            index = i.__index__()
             book.remove_record(index)
-            print(f'Record with name: {cmd[1]} deleted.')
-            break
-        else:
-            print(f'Record with name: {cmd[1]} not found.')
+            return f'Record with name: {cmd[1]} deleted.'
+    return f'Record with name: {cmd[1]} not found.'
 
 
 @input_error
@@ -83,11 +96,14 @@ def parser(string):
 
 @input_error
 def phone(cmd):
-    for item in book:
-        if cmd[1] in item:
-            return item
-        else:
-            print(f'Record with name {cmd[1]} not found.')
+    '''
+        Ищу и вывожу в консоль номер телефона контакта по имени.
+    '''
+    for i in range(len(book)):
+        if book[i].__getitem__('name') == cmd[1]:
+            phone = book[i].__getitem__('phone')
+            return f'{cmd[1]}: {phone}.'
+    return f'Record with name: {cmd[1]} not found.'
 
 
 def show_all(*args):
@@ -96,23 +112,6 @@ def show_all(*args):
         Нужно доработать вывод с пагинацией.
     '''
     return book
-
-
-COMMANDS = {
-            'hello': hello,
-            'add': add,
-            'delete': delete,
-            'change': change,
-            'phone': phone,
-            'show_all': show_all
-
-}
-
-EXIT_COMMANDS = {
-                'exit': '',
-                'close': '',
-                'good': ''
-}
 
 
 def save_data(save_book):
@@ -129,11 +128,11 @@ def load_data():
 
 def check_addressbook_data():
     """
-        Проверка на наличие файла с адресной книгой.
-        Если его нет, то создаю пустой экземпляр класса и присваиваю ему указатель book.
-        Если есть такой файл, загружаю содержимое и также помечаю book.
-        Далее работаю только с book. При выходе автоматически сохраняю.
-    """
+            Проверка на наличие файла с адресной книгой.
+            Если его нет, то создаю пустой экземпляр класса и присваиваю ему указатель book.
+            Если есть такой файл, загружаю содержимое и также помечаю book.
+            Далее работаю только с book. При выходе автоматически сохраняю.
+        """
     for file in Path.cwd().iterdir():
         if file.name == 'AddressBook.bin':
             print('FILE FOUND')
@@ -144,12 +143,30 @@ def check_addressbook_data():
     return AddressBook()
 
 
+COMMANDS = {
+    'hello': hello,
+    'add': add,
+    'delete': delete,
+    'change_phone': change_phone,
+    'change_birthday': change_birthday,
+    'phone': phone,
+    'show_all': show_all
+
+}
+
+EXIT_COMMANDS = {
+    'exit': '',
+    'close': '',
+    'good': ''
+}
+
+
 def main():
     while True:
-        string = input('\nEnter your command (hello, add, delete, change, phone, show_all or exit):\n')
+        string = input('\nEnter your command (hello, add, delete, change_phone, change_birthday, phone, show_all or exit):\n')
         cmd = parser(string)
         if cmd[0].lower() in EXIT_COMMANDS:
-            # сохраняю введенные данные на диск
+            # сохраняю текущее состояние книги на диск
             save_data(book)
             print(bye())
             break

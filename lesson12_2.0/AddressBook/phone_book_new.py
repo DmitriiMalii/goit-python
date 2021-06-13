@@ -28,21 +28,20 @@ class AddressBook(object):
             result += f'{str(record)}\n'
         return result
 
+    def __setitem__(self, value):
+        self.phonebook.append(value)
+
+    def __getitem__(self, index):
+        return self.phonebook[index]
+
     def add_record(self, record):
         self.phonebook.append(record)
-
-    def search(self, string):
-        for item in self.phonebook:
-            print(item)
-            if string in item['name']:
-                return True
-        return False
 
     def remove_record(self, index):
         del self.phonebook[index]
 
 
-class Record(object):
+class Record:
     def __init__(self):
         self.counter = 0
         self.record = {}
@@ -58,6 +57,12 @@ class Record(object):
             self.counter += 1
             return self.record.values()
         raise StopIteration
+
+    def __setitem__(self, key, value):
+        self.record[key] = value
+
+    def __getitem__(self, key):
+        return self.record[key]
 
     def __str__(self):
         result = ""
@@ -98,7 +103,7 @@ class Birthday(RecordField):
 book = AddressBook()
 
 name1 = Name('Alex')
-phone1 = Phone('56467886878')
+phone1 = Phone('56467trer886878')
 birthday1 = Birthday('18/04/2006')
 record1 = Record()
 record1.create_record(name1, phone1, birthday1)
@@ -110,7 +115,7 @@ record2 = Record()
 record2.create_record(name2, phone2)
 book.add_record(record2)
 
-print(record1.items())
+
 
 
 
