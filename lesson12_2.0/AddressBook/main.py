@@ -28,9 +28,13 @@ def add(cmd):
             return f'\nThe contact is already in the phone book.'
     record = Record()
     if len(cmd) >= 4:
-        record.create_record(cmd[1], cmd[2], cmd[3])
+        name, phone_num, birthday = Name(), Phone(), Birthday()
+        name.name, phone_num.phone, birthday.birthday = cmd[1], cmd[2], cmd[3]
+        record.create_record(name, phone_num, birthday)
     else:
-        record.create_record(cmd[1], cmd[2])
+        name, phone_num = Name(), Phone()
+        name.name, phone_num.phone = cmd[1], cmd[2]
+        record.create_record(name, phone_num)
     book.add_record(record)
     return f'\nContact {cmd[1]} has been added.'
 

@@ -77,24 +77,20 @@ class Record:
             self.record['phone'] = phone
 
 
-class RecordField(object):
+class Name:
+    def __init__(self):
+        self.name = None
+
+    def __str__(self):
+        return f"{self.name}"
+
+
+class Phone:
     def __init__(self):
         self.__value = None
 
     def __str__(self):
         return f"{self.__value}"
-
-
-class Name(RecordField):
-    def __init__(self, name):
-        super().__init__()
-        self.name = name
-
-
-class Phone(RecordField):
-    def __init__(self, phone):
-        super().__init__()
-        self.phone = phone
 
     @property
     def phone(self):
@@ -105,13 +101,15 @@ class Phone(RecordField):
         if phone.isdigit():
             self.__value = phone
         else:
-            raise Exception('Please, enter a valid phone number')
+            print('Please, enter a valid phone number')
 
 
-class Birthday(RecordField):
-    def __init__(self, birthday):
-        super().__init__()
-        self.birthday = birthday
+class Birthday:
+    def __init__(self):
+        self.__value = None
+
+    def __str__(self):
+        return f"{self.__value}"
 
     @property
     def birthday(self):
@@ -122,4 +120,4 @@ class Birthday(RecordField):
         if birthday.isdigit() and len(birthday) == 8:
             self.__value = birthday
         else:
-            raise Exception('Please, enter a valid date birthday')
+            print('Please, enter a valid date birthday')
