@@ -99,5 +99,4 @@ class AddressBook(UserDict):
 
     def load(self):
         with open('addr_book.json', 'rb') as file:
-            templates = pickle.load(file)
-        print(templates)
+            self = pickle.load(file)
