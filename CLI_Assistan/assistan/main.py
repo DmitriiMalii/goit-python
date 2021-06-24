@@ -1,6 +1,6 @@
-from add_contacts import *
-from sort_files import sort_files_in_directory
-from tools import *
+from assistan.add_contacts import add_contact
+from assistan.sort_files import sort_files_in_directory
+from assistan.tools import *
 
 
 address_book = check_addressbook_data()

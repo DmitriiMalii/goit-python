@@ -1,4 +1,4 @@
-from validation import *
+from assistan.validation import check_name, check_phone, check_email, check_birthday
 
 
 """Addressbook has a structure in the form: dict{name contact: values},

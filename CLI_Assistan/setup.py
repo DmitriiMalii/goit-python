@@ -3,7 +3,7 @@ from setuptools import setup, find_namespace_packages
 
 setup(
     name='assistan',
-    version='v.1.0.0',
+    version='1.0.0',
     description='Command line personal helper. Working with contacts and sorting files in target directory',
     url='http://https://github.com/DmitriiMalii/CLI_Assistan',
     author='Dmitrii S Malii and misha_sid',

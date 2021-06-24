@@ -1,8 +1,8 @@
 from datetime import datetime, timedelta
 import json
 from pathlib import Path
-from add_contacts import add_phone, add_email, add_birthday, add_note
-from validation import check_note
+from assistan.add_contacts import add_phone, add_email, add_birthday, add_note
+from assistan.validation import check_note
 
 
 def find_contact(address_book):
@@ -57,8 +57,7 @@ def change_contact(address_book):
                         return f'E-MAIL FOR {key} CHANGED'
                     elif value_input.lower() == 'birthday':
                         val = address_book.get(key)
-                        val[2].clear()
-                        val[2].extend(add_birthday())
+                        val[2].replace(val[2], add_birthday())
                         return f'BIRTHDAY FOR {key} CHANGED'
                     else:
                         val = address_book.get(key)
@@ -104,7 +103,7 @@ def check_birthday_day(address_book):
     result = {}
     for key in address_book:
         val = address_book.get(key)
-        if convert_in_datetime(val[2]).date() == d2:
+        if convert_in_datetime(val[2]).day == d2.day:
             result.update({key: val[2]})
     return result
 
